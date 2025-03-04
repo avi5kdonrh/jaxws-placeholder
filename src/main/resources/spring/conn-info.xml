@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://cxf.apache.org/jaxws https://cxf.apache.org/schemas/jaxws.xsd">
+    
+    <jaxws:client name="cxfClient" id="cxfClient"
+                  serviceClass="org.example.MyService"
+                  address="${my.address}" />
+
+    <camelContext xmlns="http://camel.apache.org/schema/spring">
+        <route>
+            <from uri="timer:test"/>
+            <bean ref="cxfClient" method="get"/>
+        </route>
+    </camelContext>
+
+    <bean name="address" class="java.lang.String">
+        <constructor-arg value="${my.address}"/>
+    </bean>
+
+    <bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus"/>
+
+</beans>
+
