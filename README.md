@@ -7,7 +7,7 @@
 ```
 - To run the application
 ```xml
-mvn spring-boot:run
+mvn clean package spring-boot:run
 ```
 - It throws the following error even though my.address is configured in application.properties.
 ```xml
